@@ -1,0 +1,15 @@
+FROM tensorflow/tensorflow:1.14.0-py3
+
+# BUILD:
+# sudo docker build --no-cache -t audi/challenge .
+# RUN:
+# sudo docker run --rm -it audi/challenge /bin/bash
+
+LABEL maintainer="Erick Zetinator <erick.zetina@audi.de"
+
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+ADD ./challenge /challenge
+WORKDIR /challenge
+
+CMD [ "/bin/bash" ]
