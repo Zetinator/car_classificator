@@ -8,18 +8,16 @@ https://pytorch.org/hub/pytorch_vision_mobilenet_v2/
 import torch
 import torchvision.models as models
 
-class Network(torch.nn.Module):
+class Classifier(torch.nn.Module):
     """classificator of cars
     """
     def __init__(self, opt):
+        super(Classifier, self).__init__()
         self.opt = opt
-        self.model = build_network()
-        self.criterion = torch.nn.CrossEntropyLoss()
-        self.optimizer = torch.optim.Adam(self.model.params,
-                                          lr=self.opt.lr,
-                                          betas=(self.opt.beta1, self.opt.beta2))
+        self.model = None
+        self.build()
 
-    def build_network(self):
+    def build(self):
         """build our custom network over the mobilenet_v2
         """
         # load pretrained mobilenet_v2
@@ -32,7 +30,7 @@ class Network(torch.nn.Module):
         in_features = model.classifier[1].in_features
         # we add our custom fully connected layer according to the num of classes
         model.classifier[1] = torch.nn.Linear(in_features, self.opt.num_classes)
-        return model
+        self.model = model
 
     def forward(self, x):
         return self.model(x)
@@ -42,8 +40,3 @@ class Network(torch.nn.Module):
         """
         with torch.no_grad():
             return self.model(x)
-
-    def save(self, epoch):
-        file_name = f'checkpoint_epoch_{epoch}_{self.opt.lr}'
-        save_path = os.path.join(self.opt.checkpoint_path, file_name)
-        torch.save(self.model.cpu().state_dict(), save_path)

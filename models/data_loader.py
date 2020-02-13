@@ -14,23 +14,42 @@ class CarLoader():
         self.classes = None
         self.class_to_idx = None
 
-    def load(self):
+    def load_train(self):
         """call this function to load the dataset
         """
         # define chain of preprocessing steps
         preprocess = transforms.Compose([
-            transforms.Resize(256),
+            # transforms.Resize(256),
             transforms.RandomPerspective(),
             transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(224),
+            transforms.RandomResizedCrop(224),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ])
         # apply preprocessing
-        data = datasets.ImageFolder(root=self.opt.dataset,
-                                             transform=preprocess)
+        data = datasets.ImageFolder(root=self.opt.train_dataset,
+                                    transform=preprocess)
         self.classes = data.classes
         self.class_to_idx = data.class_to_idx
+        # return DataLoader initialized
+        return torch.utils.data.DataLoader(data,
+                                           batch_size=self.opt.batch_size,
+                                           shuffle=True,
+                                           num_workers=self.opt.num_workers)
+
+    def load_test(self):
+        """call this function to load the test dataset
+        """
+        # define chain of preprocessing steps
+        preprocess = transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ])
+        # apply preprocessing
+        data = datasets.ImageFolder(root=self.opt.test_dataset,
+                                    transform=preprocess)
         # return DataLoader initialized
         return torch.utils.data.DataLoader(data,
                                            batch_size=self.opt.batch_size,
