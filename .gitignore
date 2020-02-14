@@ -1,6 +1,7 @@
 # do not keep track of the data
 data/
 docs/
+checkpoints/
 
 # classic python stuff
 **/*.swp
