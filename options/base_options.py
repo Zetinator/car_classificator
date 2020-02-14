@@ -23,7 +23,7 @@ class BaseOptions():
         self.parser.add_argument("--checkpoint", default='./checkpoints', help="directory with checkpoint to resume training from or use for testing")
         # data
         self.parser.add_argument("--batch_size", type=int, default=32, help="number of images in batch")
-        self.parser.add_argument("--num_workers", type=int, default=8, help="number of workers")
+        self.parser.add_argument("--num_workers", type=int, default=10, help="number of workers")
         self.parser.add_argument("--num_classes", type=int, default=196,  help="number of classes on the dataset to classify")
         # misc
         self.parser.add_argument("--num_channels", type=int, default=3, help="Number of output color channels")

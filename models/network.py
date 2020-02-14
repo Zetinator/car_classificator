@@ -23,8 +23,8 @@ class Classifier(torch.nn.Module):
         # load pretrained mobilenet_v2
         model = models.mobilenet_v2(pretrained=True)
         # allow fine-tuning
-        for param in model.parameters():
-            param.requires_grad = False
+        # for param in model.parameters():
+            # param.requires_grad = False
         # the last module of the mobilenet_v2 is called classifier
             # (0): Dropout(p=0.2, inplace=False)
             # (1): Linear(in_features=1280, out_features=1000, bias=True)
