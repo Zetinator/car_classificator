@@ -56,6 +56,9 @@ def main(argv):
     dataset = data_loader.load_train()
     # load network, and publish
     model = Classifier(opt)
+    # load from checkpoint?
+    if opt.load_checkpoint:
+        model.load_state_dict(torch.load(opt.load_checkpoint))
     writer.add_graph(model.model, torch.randn(1,3,224,224))
     # load loss function
     criterion = torch.nn.CrossEntropyLoss()
