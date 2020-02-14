@@ -10,12 +10,12 @@ class TrainOptions(BaseOptions):
         BaseOptions.initialize(self)
         # epochs
         self.parser.add_argument("--max_epochs", type=int, default=700, help="number of training epochs")
-        self.parser.add_argument("--summary_freq", type=int, default=1, help="update summaries every summary_freq steps")
+        self.parser.add_argument("--summary_freq", type=int, default=5, help="update summaries every summary_freq steps")
         self.parser.add_argument("--save_freq", type=int, default=100, help="save model every save_freq epochs, 0 to disable")
         # continue?
         self.parser.add_argument('--load_checkpoint', type=str, default=None, help='continue training: path to the last checkpoint model to load')
         # adam parameters
-        self.parser.add_argument('--lr', type=float, default=0.0002, help='initial learning rate for adam')
+        self.parser.add_argument('--lr', type=float, default=0.01, help='initial learning rate for adam')
         self.parser.add_argument('--lr_step_size', type=float, default=20, help='initial learning rate for adam')
         self.parser.add_argument('--lr_update_rate', type=float, default=0.1, help='initial learning rate for adam')
         self.parser.add_argument('--beta1', type=float, default=0.0, help='momentum term of adam')

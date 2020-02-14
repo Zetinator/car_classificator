@@ -18,6 +18,7 @@ class BaseOptions():
         # general
         self.parser.add_argument("--train_dataset", default='./data/data_in_class_folder', help="path to the dataset of images to train")
         self.parser.add_argument("--test_dataset", default='./data/data_in_class_folder', help="path to the dataset of images to train")
+        self.parser.add_argument("--logs", default='./logs', help="path to logs dir, to print in tensorboard")
         self.parser.add_argument("--output_dir", default='./results', help="where to put output files")
         self.parser.add_argument("--checkpoint", default='./checkpoints', help="directory with checkpoint to resume training from or use for testing")
         # data
