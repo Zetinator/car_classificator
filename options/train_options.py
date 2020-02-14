@@ -15,7 +15,7 @@ class TrainOptions(BaseOptions):
         # continue?
         self.parser.add_argument('--load_checkpoint', type=str, default=None, help='continue training: path to the last checkpoint model to load')
         # adam parameters
-        self.parser.add_argument('--lr', type=float, default=0.01, help='initial learning rate for adam')
+        self.parser.add_argument('--lr', type=float, default=0.001, help='initial learning rate for adam')
         self.parser.add_argument('--lr_step_size', type=float, default=20, help='initial learning rate for adam')
         self.parser.add_argument('--lr_update_rate', type=float, default=0.1, help='initial learning rate for adam')
         self.parser.add_argument('--beta1', type=float, default=0.0, help='momentum term of adam')
