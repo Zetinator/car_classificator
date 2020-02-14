@@ -114,6 +114,10 @@ def main(argv):
             # publish grid with predictions
             fig = _plot_grid(predictions, imgs, labels, data_loader.classes)
             writer.add_figure('predictions', fig, global_step=epoch)
+            for tag, parm in model.model.named_parameters:
+                writer.add_histogram(f'grad_' + tag, parm.grad.data.cpu().numpy(), epoch)
+                writer.add_histogram(f'weights_' + tag, parm.weights.data.cpu().numpy(), epoch)
+            # writer.add_histogram('classifier', model.model.classifier[1].weight, global_step=epoch)
         # print summary
         print('\repoch: {e:>6}, loss: {loss:.4f}, accuracy: {acc:.4f}, in: {time:.4f}s'\
                 .format(e=epoch,
