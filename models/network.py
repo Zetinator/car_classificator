@@ -7,6 +7,8 @@ https://pytorch.org/hub/pytorch_vision_mobilenet_v2/
 """
 import torch
 import torchvision.models as models
+# custom implementation of the new efficien-net
+from efficientnet_pytorch import EfficientNet
 
 class Classifier(torch.nn.Module):
     """classificator of cars
@@ -21,16 +23,15 @@ class Classifier(torch.nn.Module):
         """build our custom network over the mobilenet_v2
         """
         # load pretrained mobilenet_v2
-        model = models.mobilenet_v2(pretrained=True)
+        model = EfficientNet.from_pretrained('efficientnet-b0')
         # allow fine-tuning
         # for param in model.parameters():
             # param.requires_grad = False
         # the last module of the mobilenet_v2 is called classifier
-            # (0): Dropout(p=0.2, inplace=False)
             # (1): Linear(in_features=1280, out_features=1000, bias=True)
-        in_features = model.classifier[1].in_features
         # we add our custom fully connected layer according to the num of classes
-        model.classifier[1] = torch.nn.Linear(in_features, self.opt.num_classes)
+        model._fc = torch.nn.Linear(in_features=model._fc.in_features,
+                                    out_features=opt.num_classes)
         self.model = model
 
     def forward(self, x):
