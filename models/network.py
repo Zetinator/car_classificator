@@ -31,7 +31,7 @@ class Classifier(torch.nn.Module):
             # (1): Linear(in_features=1280, out_features=1000, bias=True)
         # we add our custom fully connected layer according to the num of classes
         model._fc = torch.nn.Linear(in_features=model._fc.in_features,
-                                    out_features=opt.num_classes)
+                                    out_features=self.opt.num_classes)
         self.model = model
 
     def forward(self, x):
