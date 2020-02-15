@@ -50,9 +50,10 @@ def main(argv):
     # ==============================
     # create summary writer, publisher
     Path(opt.logs).mkdir(parents=True, exist_ok=True)
-    writer = SummaryWriter(os.path.join(opt.logs,f'lr{opt.lr}_{time.time()}'))
+    # writer = SummaryWriter(os.path.join(opt.logs,f'lr{opt.lr}_{time.time()}'))
     # load dataset
     data_loader = CarLoader(opt)
+    import pdb; pdb.set_trace()
     dataset = data_loader.load_train()
     # load network, and publish
     model = Classifier(opt)
