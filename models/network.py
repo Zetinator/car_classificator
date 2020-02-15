@@ -13,6 +13,7 @@ import torchvision.models as models
 from torchvision import transforms
 import torch.nn.functional as F
 
+from efficientnet_pytorch import EfficientNet
 from models.classes import classes 
 
 class Classifier(torch.nn.Module):
@@ -29,17 +30,15 @@ class Classifier(torch.nn.Module):
         """build our custom network over the mobilenet_v2
         """
         # load pretrained mobilenet_v2
-        model = models.mobilenet_v2(pretrained=True)
+        model = EfficientNet.from_pretrained('efficientnet-b0')
         # allow fine-tuning
         # for param in model.parameters():
             # param.requires_grad = False
         # the last module of the mobilenet_v2 is called classifier
-            # (0): Dropout(p=0.2, inplace=False)
             # (1): Linear(in_features=1280, out_features=1000, bias=True)
-        in_features = model.classifier[1].in_features
-        out_features = self.opt.num_classes if self.opt else len(self.classes)
         # we add our custom fully connected layer according to the num of classes
-        model.classifier[1] = torch.nn.Linear(in_features, out_features)
+        model._fc = torch.nn.Linear(in_features=model._fc.in_features,
+                                    out_features=196)
         self.model = model
 
     def forward(self, x):
@@ -69,5 +68,6 @@ class Classifier(torch.nn.Module):
         preds = preds.item()
         if not show_probability:
             return f'{self.classes[preds]}'
-        p = {k:v.item() for k,v in zip(self.classes, F.softmax(prediction[0], dim=0))}
-        return f'{self.classes[preds]} with:\n{p}'
+        p = [(k, v.item()) for k,v in zip(self.classes, F.softmax(prediction[0], dim=0))]
+        p.sort(key=lambda k, v: v)[:5]
+        return f'{self.classes[preds]} with: {p}'
