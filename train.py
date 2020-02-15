@@ -113,8 +113,7 @@ def main(argv):
             writer.add_figure('predictions', fig, global_step=epoch)
             for name, param in model.model.named_parameters():
                 writer.add_histogram(f'weights_' + name, param.data.cpu().numpy(), epoch)
-                # writer.add_histogram(f'grad_' + name, param.grad.data.cpu().numpy(), epoch)
-            writer.add_histogram('classifier', model.model.classifier[1].weight, global_step=epoch)
+                writer.add_histogram(f'grad_' + name, param.grad.data.cpu().numpy(), epoch)
         # print summary
         print('\repoch: {e:>6}, loss: {loss:.4f}, accuracy: {acc:.4f}, in: {time:.4f}s'\
                 .format(e=epoch,
