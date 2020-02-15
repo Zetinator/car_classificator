@@ -9,9 +9,9 @@ class TrainOptions(BaseOptions):
     def initialize(self):
         BaseOptions.initialize(self)
         # epochs
-        self.parser.add_argument("--max_epochs", type=int, default=700, help="number of training epochs")
+        self.parser.add_argument("--max_epochs", type=int, default=205, help="number of training epochs")
         self.parser.add_argument("--summary_freq", type=int, default=5, help="update summaries every summary_freq steps")
-        self.parser.add_argument("--save_freq", type=int, default=100, help="save model every save_freq epochs, 0 to disable")
+        self.parser.add_argument("--save_freq", type=int, default=10, help="save model every save_freq epochs, 0 to disable")
         # continue?
         self.parser.add_argument('--load_checkpoint', type=str, default=None, help='continue training: path to the last checkpoint model to load')
         # adam parameters

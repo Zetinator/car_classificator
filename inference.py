@@ -1,4 +1,5 @@
 import json
+from models.network import Classifier
 
 with open("idx2classes.json", "r") as f:
     idx2classes = f.read()
@@ -13,7 +14,9 @@ class CarClassifier(object):
     """
 
     def __init__(self, model_path="model.pth"):
-       pass
+        self.classifier = Classifier()
+        self.classifier.load_checkpoint(model_path)
+
     def predict(self, image_file):
         """
         Args:
@@ -22,4 +25,4 @@ class CarClassifier(object):
             string: The predicted class of the car.
         """
        
-        return "Audi R8 Coupe 2012"
+        return self.classifier.predict(image_file)

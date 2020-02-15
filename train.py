@@ -37,9 +37,9 @@ def _plot_grid(predictions, imgs, labels, classes):
     for i in range(n):
         ax = fig.add_subplot(n//4, 4, i+1)
         plt.imshow(np_imgs[i].clip(0,1))
-        ax.set_title('{0}, {1:.2}%\nground truth: {2}'\
+        ax.set_title('{0}, {1: >3}%\nground truth: {2}'\
                 .format(classes[preds[i]],
-                        probs[i] * 100.0,
+                        int(probs[i] * 100),
                         classes[labels[i]]),
                         color=("green" if preds[i]==labels[i].item() else "red"))
     return fig
@@ -113,8 +113,7 @@ def main(argv):
             writer.add_figure('predictions', fig, global_step=epoch)
             for name, param in model.model.named_parameters():
                 writer.add_histogram(f'weights_' + name, param.data.cpu().numpy(), epoch)
-                # writer.add_histogram(f'grad_' + name, param.grad.data.cpu().numpy(), epoch)
-            writer.add_histogram('classifier', model.model.classifier[1].weight, global_step=epoch)
+                writer.add_histogram(f'grad_' + name, param.grad.data.cpu().numpy(), epoch)
         # print summary
         print('\repoch: {e:>6}, loss: {loss:.4f}, accuracy: {acc:.4f}, in: {time:.4f}s'\
                 .format(e=epoch,
