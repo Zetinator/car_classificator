@@ -37,9 +37,9 @@ def _plot_grid(predictions, imgs, labels, classes):
     for i in range(n):
         ax = fig.add_subplot(n//4, 4, i+1)
         plt.imshow(np_imgs[i].clip(0,1))
-        ax.set_title('{0}, {1:.2}%\nground truth: {2}'\
+        ax.set_title('{0}, {1: >3}%\nground truth: {2}'\
                 .format(classes[preds[i]],
-                        probs[i] * 100.0,
+                        int(probs[i] * 100.0),
                         classes[labels[i]]),
                         color=("green" if preds[i]==labels[i].item() else "red"))
     return fig

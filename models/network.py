@@ -23,10 +23,10 @@ class Classifier(torch.nn.Module):
         """build our custom network over the mobilenet_v2
         """
         # load pretrained mobilenet_v2
-        model = EfficientNet.from_pretrained('efficientnet-b0')
+        model = EfficientNet.from_pretrained('efficientnet-b5')
         # allow fine-tuning
-        # for param in model.parameters():
-            # param.requires_grad = False
+        for param in model.parameters():
+            param.requires_grad = False
         # the last module of the mobilenet_v2 is called classifier
             # (1): Linear(in_features=1280, out_features=1000, bias=True)
         # we add our custom fully connected layer according to the num of classes
