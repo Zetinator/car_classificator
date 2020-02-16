@@ -1,15 +1,16 @@
-FROM tensorflow/tensorflow:1.14.0-py3
+FROM pytorch/pytorch
 
 # BUILD:
 # sudo docker build --no-cache -t audi/challenge .
 # RUN:
 # sudo docker run --rm -it audi/challenge /bin/bash
 
-LABEL maintainer="Erick Zetinator <erick.zetina@audi.de"
+LABEL maintainer="Erick Zetinator <erick_zetina@hotmail.com"
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
-ADD ./challenge /challenge
-WORKDIR /challenge
+RUN pip install -v efficientnet-pytorch==0.6.1
+RUN git clone https://github.com/Zetinator/car_classificator.git
 
 CMD [ "/bin/bash" ]
+CMD [ "cd car_classificator" ]
