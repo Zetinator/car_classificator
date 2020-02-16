@@ -69,5 +69,5 @@ class Classifier(torch.nn.Module):
         if not show_probability:
             return f'{self.classes[preds]}'
         p = [(k, v.item()) for k,v in zip(self.classes, F.softmax(prediction[0], dim=0))]
-        p.sort(key=lambda k, v: v)[:5]
-        return f'{self.classes[preds]} with: {p}'
+        p.sort(key=lambda v: -v[1])
+        return f'{self.classes[preds]} with: {p[:5]}'
