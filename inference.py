@@ -36,7 +36,7 @@ class Classifier(torch.nn.Module):
         return self.model(x)
 
     def load_checkpoint(self, checkpoint_path):
-        self.model.load_state_dict(torch.load(checkpoint_path))
+        self.model.load_state_dict(torch.load(checkpoint_path, map_location=torch.device('cpu')))
 
     def predict(self, img, show_probability=False):
         """same as forward but with no backpropagation
